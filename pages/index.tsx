@@ -1,7 +1,9 @@
 import type { NextPage } from 'next';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 const Home: NextPage = () => {
+  const [feedbackItems, setFeedbackItems] = useState<any[]>([]);
+
   const emailInputRef = useRef<HTMLInputElement>(null);
   const feedbackInputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -32,6 +34,12 @@ const Home: NextPage = () => {
       .then((data) => console.log(data));
   };
 
+  const loadFeedbackHandler = () => {
+    fetch('/api/feedback')
+      .then((response) => response.json())
+      .then((data) => setFeedbackItems(data.feedback));
+  };
+
   return (
     <div>
       <h1>The Home Page</h1>
@@ -46,6 +54,15 @@ const Home: NextPage = () => {
         </div>
         <button>Send Feedback</button>
       </form>
+      <hr />
+      <button onClick={loadFeedbackHandler}>Load Feedback</button>
+      <ul>
+        {feedbackItems.map((item, index) => (
+          <li key={index}>
+            <div>{item.text}</div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
