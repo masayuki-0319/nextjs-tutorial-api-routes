@@ -14,11 +14,11 @@ interface FeedbackRequest extends NextApiRequest {
 
 type Data = {};
 
-const buildFeedbackPath = () => {
+export const buildFeedbackPath = () => {
   return path.join(process.cwd(), 'data', 'feedback.json');
 };
 
-const extractFeedback = (filePath: string) => {
+export const extractFeedback = (filePath: string) => {
   const fileData = fs.readFileSync(filePath);
   const data = JSON.parse(fileData as unknown as string) as any[];
 
