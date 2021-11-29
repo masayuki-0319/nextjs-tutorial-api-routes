@@ -28,7 +28,7 @@ export default function handler(
       text: feedbackText,
     };
 
-    const filePath = path.join(process.cwd(), 'data', 'feedbacc.json');
+    const filePath = path.join(process.cwd(), 'data', 'feedback.json');
     const fileData = fs.readFileSync(filePath);
     const data = JSON.parse(fileData as unknown as string) as any[];
 
