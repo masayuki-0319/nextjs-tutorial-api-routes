@@ -1,4 +1,5 @@
 import { NextPage, InferGetStaticPropsType, GetStaticPropsContext } from 'next';
+import { useState } from 'react';
 import { buildFeedbackPath, extractFeedback } from '../api/feedback';
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
@@ -6,14 +7,28 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>;
 export const FeedbackPage: NextPage<Props> = (props) => {
   const { feedbackItems } = props;
 
+  const [feedbackData, setfeedDackData] = useState<any>();
+
+  const loadFeedbackhandler = (feedbackId: string) => {
+    fetch(`/api/${feedbackId}`)
+      .then((response) => response.json())
+      .then((data) => setfeedDackData(data.feedback));
+  };
+
   return (
-    <ul>
-      {feedbackItems.map((item, index) => (
-        <li key={index}>
-          <div>{item.text}</div>
-        </li>
-      ))}
-    </ul>
+    <>
+      {feedbackData && <p>{feedbackData.email}</p>}
+      <ul>
+        {feedbackItems.map((item, index) => (
+          <li key={index}>
+            {item.text}
+            <button onClick={() => loadFeedbackhandler(item.id)}>
+              Show Details
+            </button>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
 
