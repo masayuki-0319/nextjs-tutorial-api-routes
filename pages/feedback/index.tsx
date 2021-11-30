@@ -10,7 +10,7 @@ export const FeedbackPage: NextPage<Props> = (props) => {
   const [feedbackData, setfeedDackData] = useState<any>();
 
   const loadFeedbackhandler = (feedbackId: string) => {
-    fetch(`/api/${feedbackId}`)
+    fetch(`/api/feedback/${feedbackId}`)
       .then((response) => response.json())
       .then((data) => setfeedDackData(data.feedback));
   };
